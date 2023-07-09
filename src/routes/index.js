@@ -1,7 +1,7 @@
-const AdminRouter = require('./admin.router.js')
-
 const routes = [
-    AdminRouter
+    require('./admin.router.js'),
+    require('./partners.router.js'),
+    require('./ProductCategories.router')
 ]
 
 const combineRoutes = (app) => {
