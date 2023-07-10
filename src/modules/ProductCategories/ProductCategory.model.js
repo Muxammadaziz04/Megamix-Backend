@@ -37,6 +37,12 @@ const ProductCategoryModel = (sequelize) => {
             modelName: 'ProductCategory',
             timestamps: false
         })
+
+        ProductCategory.accosiate = (models) => {
+            ProductCategory.hasMany(models.Product, {
+                foreignKey: 'productId'
+            })
+        }
     } catch (error) {
         console.log(error.message);
     }
