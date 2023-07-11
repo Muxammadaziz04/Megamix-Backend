@@ -1,4 +1,6 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
+const { default: slugify } = require("slugify");
+const slugifyConfig = require("../../configs/slugify.config");
 
 class Product extends Model {}
 
@@ -14,13 +16,30 @@ const ProductModel = (sequelize) => {
             },
             title: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
+                unique: {
+                    arg: true,
+                    msg: 'Название продукта должен быть уникальным! Пожалуйста придумайте другое название.'
+                }
             },
+            slug: {
+                type: DataTypes.STRING,
+            }
         }, {
             sequelize,
             modelName: 'Product',
+            hooks: {
+                beforeCreate: (model) => {
+                    const values = model.dataValues
+                    model.slug = slugify(values?.title || '', slugifyConfig)
+                },
+                beforeUpdate: (model) => {
+                    const values = model.dataValues
+                    model.slug = slugify(values?.title || '', slugifyConfig)
+                },
+            }
         })
-
+        
         Product.associate = (models) => {
             Product.belongsTo(models.ProductCategory, {
                 foreignKey: {

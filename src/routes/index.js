@@ -4,6 +4,8 @@ const routes = [
     require('./ProductCategories.router.js'),
     require('./product.router.js'),
     require('./feedback.router.js'),
+    require('./news.router.js'),
+    require('./journal.router.js'),
 ]
 
 const combineRoutes = (app) => {

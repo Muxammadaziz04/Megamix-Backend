@@ -13,7 +13,7 @@ class ProductService {
 
     async getAll({ page = 1, limit = 10, lang, categoryId }) {
         try {
-            const products = await this.models.Product.findAndCountAll({ 
+            const products = await this.models.Product.findAndCountAll({
                 attributes: { exclude: ['categoryId'] },
                 include: [
                     {
@@ -60,10 +60,11 @@ class ProductService {
     async createProduct(body) {
         try {
             return await this.models.Product.create(body, {
+                individualHooks: true,
                 include: [
                     { model: this.models.ProductCategory, as: 'category' },
                     { model: this.models.ProductLanguage, as: 'languages' }
-                ]
+                ],
             })
         } catch (error) {
             return new SequelizeError(error)
@@ -72,7 +73,7 @@ class ProductService {
 
     async deleteProduct(id) {
         try {
-            const status = await this.models?.Product.destroy({where: {id}})
+            const status = await this.models?.Product.destroy({ where: { id } })
             return {
                 succes: status === 1,
                 message: status === 1 ? 'Product deleted' : 'Product not found'

@@ -1,6 +1,6 @@
 const SequelizeError = require("../../errors/sequelize.error")
 
-class ExampleCompanyService {
+class AboutCompanyService {
     constructor(sequelize) {
         this.models = sequelize.models
     }
@@ -14,4 +14,4 @@ class ExampleCompanyService {
     }
 }
 
-module.exports = ExampleCompanyService
+module.exports = AboutCompanyService

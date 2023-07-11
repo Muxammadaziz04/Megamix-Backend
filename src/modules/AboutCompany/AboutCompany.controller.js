@@ -1,4 +1,4 @@
-class NewsCompanyController {
+class AboutCompanyController {
     async getAll(req, res, next) {
         try {
             
@@ -8,4 +8,4 @@ class NewsCompanyController {
     }
 }
 
-module.exports = new NewsCompanyController()
+module.exports = new AboutCompanyController()

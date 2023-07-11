@@ -1,10 +1,10 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
 
-class ExampleCompany extends Model {}
+class AboutCompany extends Model {}
 
-const ExampleCompanyModel = (sequelize) => {
+const AboutCompanyModel = (sequelize) => {
     try {
-        ExampleCompany.init({
+        AboutCompany.init({
             id: {
                 type: DataTypes.UUID,
                 allowNull: false,
@@ -14,11 +14,11 @@ const ExampleCompanyModel = (sequelize) => {
             }
         }, {
             sequelize,
-            modelName: 'ExampleCompany'
+            modelName: 'AboutCompany'
         })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-module.exports = ExampleCompanyModel
+module.exports = AboutCompanyModel
