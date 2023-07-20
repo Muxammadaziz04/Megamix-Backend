@@ -22,6 +22,36 @@ const ProductModel = (sequelize) => {
                     msg: 'Название продукта должен быть уникальным! Пожалуйста придумайте другое название.'
                 }
             },
+            foto: {
+                type: DataTypes.STRING
+            },
+            video: {
+                type: DataTypes.STRING
+            },
+            weight: {
+                type: DataTypes.STRING
+            },
+            compressiveStrength: {
+                type: DataTypes.STRING
+            },
+            mixinWithWater: {
+                type: DataTypes.STRING
+            },
+            workingMediumTemperature: {
+                type: DataTypes.STRING
+            },
+            calcLayerWidth: {
+                type: DataTypes.NUMBER
+            },
+            calcVolume: {
+                type: DataTypes.NUMBER
+            },
+            calcWaterQuantity: {
+                type: DataTypes.NUMBER
+            },
+            calcWeight: {
+                type: DataTypes.NUMBER
+            },
             slug: {
                 type: DataTypes.STRING,
             }

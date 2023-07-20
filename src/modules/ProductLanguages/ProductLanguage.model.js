@@ -13,7 +13,10 @@ const ProductLanguageModel = (sequelize) => {
                 primaryKey: true,
                 unique: true,
             },
-            definition: {
+            shortDescription: {
+                type: DataTypes.STRING
+            },
+            description: {
                 type: DataTypes.TEXT,
                 allowNull: false
             },

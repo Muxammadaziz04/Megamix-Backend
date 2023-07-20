@@ -71,6 +71,18 @@ class ProductService {
         }
     }
 
+    async updateProduct(id, body) {
+        try {
+            const product = await this.models.Product.update(body, { where: { id } })
+            await Promise.all(body?.languages?.map(async lang => {
+                await this.models.ProductLanguage(lang, { where: { id: lang?.id } })
+            }))
+            return product
+        } catch (error) {
+            return new SequelizeError(error)
+        }
+    }
+
     async deleteProduct(id) {
         try {
             const status = await this.models?.Product.destroy({ where: { id } })
