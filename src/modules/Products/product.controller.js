@@ -16,6 +16,16 @@ class ProductController {
         }
     }
 
+    async getOne(req, res, next) {
+        try {
+            const product = await Service.getOne(req.params?.id, req.query?.lang)
+            if (product?.error) throw new ExpressError(product.message)
+            res.status(200).json(product)
+        } catch (error) {
+            next(error)
+        }
+    }
+
     async createProduct(req, res, next) {
         try {
             const body = req.body
@@ -42,6 +52,10 @@ class ProductController {
                     body.languages.push({ ...body?.[lang], lang })
                 }
             })
+            console.log(req.params?.id);
+            const product = await Service.updateProduct(req.params?.id, req.body)
+            if(product?.error) throw new ExpressError(product?.message)
+            res.status(203).json(product)
         } catch (error) {
             next(error)
         }

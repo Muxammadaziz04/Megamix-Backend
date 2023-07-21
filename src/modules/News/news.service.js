@@ -43,6 +43,37 @@ class NewsService {
         }
     }
 
+    async getById(id, lang) {
+        try {
+            let news = await this.models.News.findOne({
+                where: { id },
+                include: [
+                    { model: this.models.NewsLanguage, as: 'languages', where: lang ? { lang } : {} }
+                ],
+            })
+
+            news = JSON.parse(JSON.stringify(news))
+
+            if (lang) {
+                news = {
+                    ...news?.languages?.[0],
+                    ...news
+                }
+            } else {
+                languages?.forEach(lang => {
+                    news = {
+                        ...news,
+                        [lang]: news?.languages?.find(newsLang => newsLang?.lang === lang) || {}
+                    }
+                })
+            }
+            delete news?.languages
+            return news
+        } catch (error) {
+            return new SequelizeError(error)
+        }
+    }
+
     async create(body) {
         try {
             return await this.models.News.create(body, {
@@ -59,8 +90,8 @@ class NewsService {
         try {
             const status = await this.models.News.update(body, { where: { id } })
             return {
-                succes: status === 1,
-                message: status === 1 ? 'News updated' : 'News updated'
+                succes: status?.[0] === 1,
+                message: status?.[0] === 1 ? 'News updated' : 'News is not updated'
             }
         } catch (error) {
             return new SequelizeError(error)
@@ -71,8 +102,8 @@ class NewsService {
         try {
             const status = await this.models.News.destroy({ where: { id } })
             return {
-                succes: status === 1,
-                message: status === 1 ? 'News deleted' : 'News not found'
+                succes: status?.[0] === 1,
+                message: status?.[0] === 1 ? 'News deleted' : 'News not found'
             }
         } catch (error) {
             return new SequelizeError(error)

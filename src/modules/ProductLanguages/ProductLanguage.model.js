@@ -17,7 +17,7 @@ const ProductLanguageModel = (sequelize) => {
                 type: DataTypes.STRING
             },
             description: {
-                type: DataTypes.TEXT,
+                type: DataTypes.TEXT,   
                 allowNull: false
             },
             technicalSpecifications: {

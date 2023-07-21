@@ -27,8 +27,8 @@ class VacancyService {
         try {
             const status = await this.models.Vacancy.update(body, { where: { id } })
             return {
-                succes: status === 1,
-                message: status === 1 ? 'Vacancy updated' : 'Vacancy updated'
+                succes: status?.[0] === 1,
+                message: status?.[0] === 1 ? 'Vacancy updated' : 'Vacancy updated'
             }
         } catch (error) {
             return new SequelizeError(error)
@@ -39,8 +39,8 @@ class VacancyService {
         try {
             const status = await this.models.Vacancy.destroy({ where: { id } })
             return {
-                succes: status === 1,
-                message: status === 1 ? 'Vacancy deleted' : 'Vacancy not found'
+                succes: status?.[0] === 1,
+                message: status?.[0] === 1 ? 'Vacancy deleted' : 'Vacancy not found'
             }
         } catch (error) {
             return new SequelizeError(error)

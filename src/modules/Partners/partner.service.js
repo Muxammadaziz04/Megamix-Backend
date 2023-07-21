@@ -26,7 +26,7 @@ class PartnerService {
     async deletePartner(id) {
         try {
             const partner = await this.models.Partner.destroy({ where: { id } })
-            return partner === 1 ? { success: true, message: 'Partner deleted' } : { success: false, message: 'Partner is not found' }
+            return partner?.[0] === 1 ? { success: true, message: 'Partner deleted' } : { success: false, message: 'Partner is not found' }
         } catch (error) {
             return new SequelizeError(error)
         }

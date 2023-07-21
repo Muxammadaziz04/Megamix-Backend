@@ -15,6 +15,16 @@ class NewsController {
         }
     }
 
+    async getById(req, res, next) {
+        try {
+            const news = await Service.getById(req.params?.id, req.query?.lang)
+            if(news?.error) throw new ExpressError(news?.message)
+            res.status(200).json(news)
+        } catch (error) {
+            next(error)
+        }
+    }
+
     async create(req, res, next) {
         try {
             const body = req.body

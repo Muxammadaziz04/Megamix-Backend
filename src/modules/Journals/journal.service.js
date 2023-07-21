@@ -59,8 +59,8 @@ class JournalService {
         try {
             const status = await this.models.Journal.update(body, { where: { id } })
             return {
-                succes: status === 1,
-                message: status === 1 ? 'Journal updated' : 'Journal updated'
+                succes: status?.[0] === 1,
+                message: status?.[0] === 1 ? 'Journal updated' : 'Journal updated'
             }
         } catch (error) {
             return new SequelizeError(error)
@@ -71,8 +71,8 @@ class JournalService {
         try {
             const status = await this.models.Journal.destroy({ where: { id } })
             return {
-                succes: status === 1,
-                message: status === 1 ? 'Journal deleted' : 'Journal not found'
+                succes: status?.[0] === 1,
+                message: status?.[0] === 1 ? 'Journal deleted' : 'Journal not found'
             }
         } catch (error) {
             return new SequelizeError(error)

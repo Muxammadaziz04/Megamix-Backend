@@ -28,8 +28,8 @@ class ProductCategoryService {
         try {
             const status = await this.models.ProductCategory.destroy({ where: { id } })
             return {
-                succes: status === 1,
-                message: status === 1 ? 'Category deleted' : 'Category not found'
+                succes: status?.[0] === 1,
+                message: status?.[0] === 1 ? 'Category deleted' : 'Category not found'
             }
         } catch (error) {
             return new SequelizeError(error)
