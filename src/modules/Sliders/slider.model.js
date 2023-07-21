@@ -15,27 +15,7 @@ const SliderModel = (sequelize) => {
             image: {
                 type: DataTypes.STRING,
                 allowNull: false,
-            },
-            uz: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            ru: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            tr: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            tj: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            en: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
+            }
         }, {
             sequelize,
             modelName: 'Slider'

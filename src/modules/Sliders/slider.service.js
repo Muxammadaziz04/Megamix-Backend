@@ -7,9 +7,9 @@ class SliderService {
         this.models = sequelize.models
     }
 
-    async getAll({ lang = 'ru' }) {
+    async getAll(lang = 'ru') {
         try {
-            return await this.models.Slider.findAll({ attributes: [[lang, 'title']] })
+            return await this.models.Slider.findAll()
         } catch (error) {
             return new SequelizeError(error)
         }

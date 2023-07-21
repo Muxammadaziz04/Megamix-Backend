@@ -6,6 +6,7 @@ const routes = [
     require('./feedback.router.js'),
     require('./news.router.js'),
     require('./journal.router.js'),
+    require('./slider.router.js'),
 ]
 
 const combineRoutes = (app) => {
