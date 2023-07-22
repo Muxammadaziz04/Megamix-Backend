@@ -29,14 +29,23 @@ class ProductController {
     async createProduct(req, res, next) {
         try {
             const body = req.body
+            const foto = req.files?.foto
             languages.forEach(lang => {
                 if(body?.[lang]) {
                     body.languages = body?.languages || []
                     body.languages.push({ ...body?.[lang], lang })
                 }
             })
+            if (foto) {
+                const productFoto = await uploadFile({ file: foto })
+                if (productFoto?.url) body.foto = productFoto.url
+                else throw new ExpressError('foto is not uploaded')
+            }
             const product = await Service.createProduct(body)
-            if (product?.error) throw new ExpressError(product.message)
+            if (product?.error) {
+                if (body.foto) await removeFile(body.foto)
+                throw new ExpressError(product.message)
+            }
             res.status(201).json(product)
         } catch (error) {
             next(error)
