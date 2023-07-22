@@ -32,6 +32,11 @@ const ProductCategoryModel = (sequelize) => {
                 allowNull: false,
                 unique: true
             },
+            en: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                unique: true
+            }
         }, {
             sequelize,
             modelName: 'ProductCategory',
