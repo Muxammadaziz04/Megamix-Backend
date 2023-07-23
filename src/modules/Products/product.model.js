@@ -41,16 +41,20 @@ const ProductModel = (sequelize) => {
                 type: DataTypes.STRING
             },
             calcLayerWidth: {
-                type: DataTypes.INTEGER
+                type: DataTypes.STRING,
+                allowNull: true
             },
             calcVolume: {
-                type: DataTypes.INTEGER
+                type: DataTypes.STRING,
+                allowNull: true
             },
             calcWaterQuantity: {
-                type: DataTypes.INTEGER
+                type: DataTypes.STRING,
+                allowNull: true
             },
             calcWeight: {
-                type: DataTypes.INTEGER
+                type: DataTypes.STRING,
+                allowNull: true
             },
             slug: {
                 type: DataTypes.STRING,

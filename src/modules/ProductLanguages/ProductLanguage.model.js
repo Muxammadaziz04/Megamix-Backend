@@ -18,15 +18,12 @@ const ProductLanguageModel = (sequelize) => {
             },
             description: {
                 type: DataTypes.TEXT,   
-                allowNull: false
             },
             technicalSpecifications: {
                 type: DataTypes.TEXT,
-                allowNull: false
             },
             packaging: {
                 type: DataTypes.TEXT,
-                allowNull: false
             },
             lang: {
                 type: DataTypes.ENUM(languages),
