@@ -1,6 +1,8 @@
-const express = require('express')
 const cors = require('cors')
+const path = require('path')
+const express = require('express')
 const cookieParser = require('cookie-parser')
+const fileUpload = require('express-fileupload')
 const { PORT } = require('./constants/server.constants')
 const combineRoutes = require('./routes')
 const { connectToDB } = require('./services/sequelize.service')
@@ -13,6 +15,11 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.resolve(__dirname, '../uploads')))
+app.use(fileUpload({
+	tempFileDir: "temp",
+	useTempFiles: true,
+}))
 
 combineRoutes(app)
 

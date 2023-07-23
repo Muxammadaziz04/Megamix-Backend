@@ -49,7 +49,7 @@ class ProductService {
                             prd = { ...prd, [lang]: prd?.languages?.find(translate => translate?.lang === lang) || {} }
                         })
                         delete prd?.languages
-                        return prd
+                        return prd  
                     }
                 })
             }
@@ -138,10 +138,10 @@ class ProductService {
 
     async deleteProduct(id) {
         try {
-            const status = await this.models?.Product.destroy({ where: { id } })
+            const status = await this.models?.Product.destroy({ where: { id }, returning: true })
             return {
-                succes: status?.[0] === 1,
-                message: status?.[0] === 1 ? 'Product deleted' : 'Product not found'
+                succes: status === 1,
+                message: status === 1 ? 'Product deleted' : 'Product not found'
             }
         } catch (error) {
             return new SequelizeError(error)
