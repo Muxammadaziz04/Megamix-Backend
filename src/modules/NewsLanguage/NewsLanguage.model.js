@@ -15,11 +15,9 @@ const NewsLanguageModel = (sequelize) => {
             },
             title: {
                 type: DataTypes.STRING,
-                allowNull: false
             },
             description: {
                 type: DataTypes.TEXT,
-                allowNull: false
             },
             lang: {
                 type: DataTypes.ENUM(languages),

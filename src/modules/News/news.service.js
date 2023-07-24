@@ -88,7 +88,17 @@ class NewsService {
 
     async update(body, id) {
         try {
-            const status = await this.models.News.update(body, { where: { id } })
+            if (body?.languages) {
+                await Promise.all(body?.languages?.map(async lang => {
+                    const language = await this.models.NewsLanguage.findOne({ where: { lang: lang?.lang, newsId: id } })
+                    if (language) {
+                        await this.models.NewsLanguage.update(lang, { where: { lang: lang?.lang, newsId: id } })
+                    } else {
+                        this.models.NewsLanguage.create({ ...lang, newsId: id })
+                    }
+                }))
+            }
+            const status = await this.models.News.update({image: body?.image}, { where: { id } })
             return {
                 succes: status?.[0] === 1,
                 message: status?.[0] === 1 ? 'News updated' : 'News is not updated'

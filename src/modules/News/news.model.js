@@ -1,6 +1,6 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
 
-class News extends Model {}
+class News extends Model { }
 
 const NewsModel = (sequelize) => {
     try {
@@ -15,6 +15,11 @@ const NewsModel = (sequelize) => {
             image: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                validate: {
+                    notNull: {
+                        msg: 'Добавьте фото для продукта'
+                    }
+                }
             }
         }, {
             sequelize,

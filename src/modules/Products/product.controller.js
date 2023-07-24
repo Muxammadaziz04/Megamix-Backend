@@ -45,7 +45,7 @@ class ProductController {
             }
             const product = await Service.createProduct(body)
             if (product?.error) {
-                if (typeof body.foto === 'string') removeImage(body.foto)
+                if (foto && typeof body.foto === 'string') removeImage(body.foto)
                 throw new ExpressError(product.message)
             }
             res.status(201).json(product)
@@ -72,7 +72,7 @@ class ProductController {
             }
             const product = await Service.updateProduct(req.params?.id, req.body)
             if (product?.error) {
-                // if (body.foto) removeImage(body.foto)
+                if (foto && body.foto) removeImage(body.foto)
                 throw new ExpressError(product.message)
             }
             res.status(203).json(product)
