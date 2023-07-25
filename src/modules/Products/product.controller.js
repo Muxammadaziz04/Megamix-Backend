@@ -2,6 +2,7 @@ const { languages } = require("../../constants/server.constants")
 const ExpressError = require("../../errors/express.error")
 const { imageUpload, removeImage } = require("../../services/image.service")
 const { sequelize } = require("../../services/sequelize.service")
+const { uploadVideo, removeVideo } = require("../../services/video.service")
 const ProductService = require("./product.service")
 
 const Service = new ProductService(sequelize)
@@ -31,6 +32,7 @@ class ProductController {
         try {
             const body = req.body
             const foto = req.files?.foto
+            const video = req.files?.video
             languages.forEach(lang => {
                 if (body?.[lang]) {
                     if(typeof body?.[lang] === 'string') body[lang] = JSON.parse(body[lang])
@@ -43,9 +45,14 @@ class ProductController {
                 if (productFoto?.url) body.foto = productFoto.url
                 else throw new ExpressError('foto is not uploaded')
             }
+            if(video) {
+                const productVideo = await uploadVideo(video,  req.protocol + "://" + req.get("host"))
+                body.video = productVideo?.url
+            }
             const product = await Service.createProduct(body)
             if (product?.error) {
                 if (foto && typeof body.foto === 'string') removeImage(body.foto)
+                if (video && typeof body.video === 'string') removeVideo(body.video)
                 throw new ExpressError(product.message)
             }
             res.status(201).json(product)
@@ -58,6 +65,7 @@ class ProductController {
         try {
             const body = req.body
             const foto = req.files?.foto
+            const video = req.files?.video
             languages.forEach(lang => {
                 if (body?.[lang]) {
                     if(typeof body?.[lang] === 'string') body[lang] = JSON.parse(body[lang])
@@ -70,9 +78,14 @@ class ProductController {
                 if (productFoto?.url) body.foto = productFoto.url
                 else throw new ExpressError('foto is not uploaded')
             }
+            if(video) {
+                const productVideo = await uploadVideo(video, req.protocol + "://" + req.get("host"))
+                body.video = productVideo?.url
+            }
             const product = await Service.updateProduct(req.params?.id, req.body)
             if (product?.error) {
                 if (foto && body.foto) removeImage(body.foto)
+                if (video && typeof body.video === 'string') removeVideo(body.video)
                 throw new ExpressError(product.message)
             }
             res.status(203).json(product)
@@ -87,6 +100,7 @@ class ProductController {
             product = JSON.parse(JSON.stringify(product))
             if(product){
                 if(product.foto) removeImage(product.foto)
+                if(product.video) removeVideo(product.video)
                 const deletedProduct = await Service.deleteProduct(req.params?.id)
                 if (deletedProduct?.error) throw new ExpressError(deletedProduct.message)
                 res.status(203).json(deletedProduct)
