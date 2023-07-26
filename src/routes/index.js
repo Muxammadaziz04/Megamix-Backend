@@ -7,6 +7,9 @@ const routes = [
     require('./news.router.js'),
     require('./journal.router.js'),
     require('./slider.router.js'),
+    require('./foto.router.js'),
+    require('./file.router.js'),
+    require('./video.router.js'), 
 ]
 
 const combineRoutes = (app) => {
