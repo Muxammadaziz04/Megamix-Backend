@@ -10,6 +10,7 @@ const routes = [
     require('./foto.router.js'),
     require('./file.router.js'),
     require('./video.router.js'), 
+    require('./vacancy.router.js'),
 ]
 
 const combineRoutes = (app) => {

@@ -13,25 +13,23 @@ const VacancyModel = (sequelize) => {
                 unique: true,
             },
             uz: {
-                type: DataTypes.STRING,
-                allowNull: false
+                type: DataTypes.STRING
             },
             ru: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            tr: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            tj: {
-                type: DataTypes.STRING,
-                allowNull: false
+                type: DataTypes.STRING
             },
             en: {
-                type: DataTypes.STRING,
-                allowNull: false
+                type: DataTypes.STRING
             },
+            tr: {
+                type: DataTypes.STRING
+            },
+            tj: {
+                type: DataTypes.STRING
+            },
+            salary: {
+                type: DataTypes.STRING
+            }
         }, {
             sequelize,
             modelName: 'Vacancy'

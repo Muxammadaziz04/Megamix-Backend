@@ -13,16 +13,9 @@ const AdminModel = (sequelize) => {
                 primaryKey: true,
                 unique: true,
             },
-            fullName: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            email: {
+            login: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                validate: {
-                    isEmail: true
-                }
             },
             password: {
                 type: DataTypes.STRING,
