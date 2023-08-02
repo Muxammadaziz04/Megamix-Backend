@@ -99,8 +99,12 @@ class ProductController {
             let product = await Service.getOne(req.params?.id)
             product = JSON.parse(JSON.stringify(product))
             if(product){
-                if(product.foto) removeImage(product.foto)
-                if(product.video) removeVideo(product.video)
+                try {
+                    if(product.foto) removeImage(product.foto)
+                    if(product.video) removeVideo(product.video)
+                } catch (error) {
+                    console.log(error);
+                }
                 const deletedProduct = await Service.deleteProduct(req.params?.id)
                 if (deletedProduct?.error) throw new ExpressError(deletedProduct.message)
                 res.status(203).json(deletedProduct)
