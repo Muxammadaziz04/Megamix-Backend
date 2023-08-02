@@ -1,7 +1,7 @@
 const { languages } = require("../../constants/server.constants")
 const SequelizeError = require("../../errors/sequelize.error")
 const ClubLanguageModel = require("../ClubLanguage/ClubLanguage.model")
-const ClubModel = require("./Club.model")
+const ClubModel = require("./club.model")
 
 class ClubService {
     constructor(sequelize) {
@@ -10,21 +10,19 @@ class ClubService {
         this.models = sequelize.models
     }
 
-    async getAll({ limit = 10, page = 1, lang }) {
+    async getAll({ lang }) {
         try {
-            const Club = await this.models.Club.findAndCountAll({
+            let Club = await this.models.Club.findAll({
                 include: [
                     { model: this.models.ClubLanguage, as: 'languages', where: lang ? { lang } : {} }
                 ],
                 distinct: true,
                 order: [['createdAt', 'DESC']],
-                offset: limit * (page - 1)
             })
 
-            Club.rows = JSON.parse(JSON.stringify(Club?.rows))
+            Club = JSON.parse(JSON.stringify(Club))
 
-            return {
-                ...Club, rows: Club?.rows?.map(prd => {
+            return Club?.map(prd => {
                     if (lang) {
                         const result = { ...prd?.languages?.[0], ...prd }
                         delete result.languages
@@ -37,7 +35,6 @@ class ClubService {
                         return prd
                     }
                 })
-            }
         } catch (error) {
             return new SequelizeError(error)
         }
@@ -112,8 +109,8 @@ class ClubService {
         try {
             const status = await this.models.Club.destroy({ where: { id } })
             return {
-                succes: status?.[0] === 1,
-                message: status?.[0] === 1 ? 'Club deleted' : 'Club not found'
+                succes: status === 1,
+                message: status === 1 ? 'Club deleted' : 'Club not found'
             }
         } catch (error) {
             return new SequelizeError(error)

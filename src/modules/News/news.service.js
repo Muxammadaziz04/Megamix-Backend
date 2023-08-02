@@ -18,7 +18,8 @@ class NewsService {
                 ],
                 distinct: true,
                 order: [['createdAt', 'DESC']],
-                offset: limit * (page - 1)
+                offset: limit * (page - 1),
+                page
             })
 
             news.rows = JSON.parse(JSON.stringify(news?.rows))
@@ -112,8 +113,8 @@ class NewsService {
         try {
             const status = await this.models.News.destroy({ where: { id } })
             return {
-                succes: status?.[0] === 1,
-                message: status?.[0] === 1 ? 'News deleted' : 'News not found'
+                succes: status === 1,
+                message: status === 1 ? 'News deleted' : 'News not found'
             }
         } catch (error) {
             return new SequelizeError(error)
