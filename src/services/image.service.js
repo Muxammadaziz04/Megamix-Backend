@@ -5,8 +5,8 @@ const { fork } = require('child_process')
 const createDirRecursively = require('../utils/recursiveDir');
 const setFileExtension = require('../utils/setFileExtension');
 
-const imageUpload = async ({folderName = '', resize = false, image = {}, link = ''}) => {
-    return await new Promise((res, rej) => {
+const imageUpload = async ({ folderName = '', resize = false, image = {}, link = '' }) => {
+    return new Promise((res, rej) => {
         try {
             var tempFilePath = image?.tempFilePath;
             const fileName = setFileExtension(uuidv4() + image?.name.replace(/\s/g, ''), '.png')
@@ -17,10 +17,10 @@ const imageUpload = async ({folderName = '', resize = false, image = {}, link = 
             if (!fs.existsSync(outputDir)) {
                 createDirRecursively(outputDir)
             }
- 
+
             if (image && tempFilePath) {
                 if (!['image/jpeg', 'image/jpg', 'image/png', 'image/svg', 'application/octet-stream'].includes(image?.mimetype)) {
-                    if(fs.existsSync(tempFilePath)) fs.unlinkSync(tempFilePath)
+                    if (fs.existsSync(tempFilePath)) fs.unlinkSync(tempFilePath)
                     rej({
                         error: true,
                         message: 'Incorrect file type',
@@ -35,7 +35,7 @@ const imageUpload = async ({folderName = '', resize = false, image = {}, link = 
                         url,
                         resize
                     })
-                    child.on('message', ({ statusCode, msg }) => {
+                    child.on('message', ({ msg }) => {
                         res(msg)
                     })
                 }
@@ -47,7 +47,7 @@ const imageUpload = async ({folderName = '', resize = false, image = {}, link = 
                 });
             }
         } catch (error) {
-            if(fs.existsSync(tempFilePath)) fs.unlinkSync(tempFilePath)
+            if (fs.existsSync(tempFilePath)) fs.unlinkSync(tempFilePath)
             rej(error)
         }
     })
@@ -57,11 +57,11 @@ const removeImage = (url) => {
     const pathName = new URL(url)?.pathname || ''
     if (pathName) {
         fs.unlink(path.join(__dirname, '../../uploads', pathName), (err) => {
-            if(err) {
+            if (err) {
                 console.log("Remove file error :", err);
             }
         })
     }
 }
 
-module.exports = {imageUpload, removeImage}
+module.exports = { imageUpload, removeImage }

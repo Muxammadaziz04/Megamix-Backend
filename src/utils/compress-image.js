@@ -3,7 +3,7 @@ const Sharp = require('sharp')
 const compressImages = require('compress-images')
 
 let RESIZE_WIDTH = 1000;
-const compression = 97;
+const compression = 97
 
 process.on("message", (payload) => {
     const { inputPath, outputPath, tempPath, url, resize } = payload;
@@ -30,7 +30,6 @@ process.on("message", (payload) => {
                 .toFile(tempPath, (err, info) => {
                     try {
                         if (err) {
-                            console.log(err);
                             endProcess({ statusCode: 409, msg: { error: true, message: "Somethink went wrong", url: null } })
                         }
                         compressImages(tempPath, outputPath, { compress_force: false, statistic: true, autoupdate: true }, false,
@@ -39,19 +38,23 @@ process.on("message", (payload) => {
                             { svg: { engine: "svgo", command: "--multipass" } },
                             { gif: { engine: "gifsicle", command: ["--colors", "64", "--use-col=web"] } },
                             async function (error, completed, statistic) {
-                                if (error) {
-                                    throw { statusCode: 500, msg: err?.message || 'Somethink went wrong', url: null }
+                                try {
+                                    if (error) {
+                                        throw { statusCode: 500, msg: err?.message || 'Somethink went wrong', url: null }
+                                    }
+                                    fs.unlink(tempPath, function (error) {
+                                        if (error) throw { statusCode: 500, msg: err?.message || 'Somethink went wrong', url: null }
+                                    })
+                                    endProcess({ statusCode: 201, msg: { error: false, message: 'Image successful compressed and save', url } })
+                                } catch (error) {
+                                    endProcess({ statusCode: 409, msg: { error: true, message: "Somethink went wrong", url: null } })
                                 }
-                                fs.unlink(tempPath, function (error) {
-                                    if (error) throw { statusCode: 500, msg: err?.message || 'Somethink went wrong', url: null }
-                                })
-                                endProcess({ statusCode: 201, msg: { error: false, message: 'Image successful compressed and save', url } })
                             }
                         )
                     } catch (e) {
                         endProcess({ statusCode: 409, msg: { error: true, message: "Somethink went wrong", url: null } })
                     }
-
                 })
         })
+        .catch((err) => console.log(err))
 });
