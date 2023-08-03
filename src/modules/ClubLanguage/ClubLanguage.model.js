@@ -19,6 +19,9 @@ const ClubLanguageModel = (sequelize) => {
             description: {
                 type: DataTypes.TEXT,
             },
+            shortDescription: {
+                type: DataTypes.TEXT,
+            },
             lang: {
                 type: DataTypes.ENUM(languages),
                 allowNull: false
