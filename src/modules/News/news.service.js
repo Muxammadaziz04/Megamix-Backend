@@ -19,7 +19,7 @@ class NewsService {
                 distinct: true,
                 order: [['createdAt', 'DESC']],
                 offset: limit * (page - 1),
-                page
+                limit
             })
 
             news.rows = JSON.parse(JSON.stringify(news?.rows))
