@@ -8,6 +8,16 @@ const feedbackTemplate = ({ fullName = '', phoneNumber = '', description = '' })
     `
 }
 
+const UserTemplate = ({ fullName = '', phoneNumber = '', description = '' }) => {
+    return `
+🛎 Новый пользователь: 
+
+👤 Имя Фамилия: ${fullName}
+📞 Номер телефона: ${phoneNumber}
+    `
+}
+
 module.exports = {
-    feedbackTemplate
+    feedbackTemplate,
+    UserTemplate
 }

@@ -11,7 +11,8 @@ const routes = [
     require('./file.router.js'),
     require('./video.router.js'), 
     require('./vacancy.router.js'),
-    require('./club.router.js')
+    require('./club.router.js'),
+    require('./users.router.js')
 ]
 
 const combineRoutes = (app) => {
