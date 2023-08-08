@@ -41,12 +41,12 @@ class ProductController {
                 }
             })
             if (foto) {
-                const productFoto = await imageUpload({ image: foto, link: req.protocol + "://" + req.get("host") })
+                const productFoto = await imageUpload({ image: foto, link: "https://" + req.get("host") })
                 if (productFoto?.url) body.foto = productFoto.url
                 else throw new ExpressError('foto is not uploaded')
             }
             if(video) {
-                const productVideo = await uploadVideo(video,  req.protocol + "://" + req.get("host"))
+                const productVideo = await uploadVideo(video,  "https://" + req.get("host"))
                 body.video = productVideo?.url
             }
             const product = await Service.createProduct(body)
@@ -74,12 +74,12 @@ class ProductController {
                 }
             })
             if (foto) {
-                const productFoto = await imageUpload({ image: foto, link: req.protocol + "://" + req.get("host") })
+                const productFoto = await imageUpload({ image: foto, link: "https://" + req.get("host") })
                 if (productFoto?.url) body.foto = productFoto.url
                 else throw new ExpressError('foto is not uploaded')
             }
             if(video) {
-                const productVideo = await uploadVideo(video, req.protocol + "://" + req.get("host"))
+                const productVideo = await uploadVideo(video, "https://" + req.get("host"))
                 body.video = productVideo?.url
             }
             const product = await Service.updateProduct(req.params?.id, req.body)

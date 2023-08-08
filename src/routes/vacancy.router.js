@@ -7,4 +7,4 @@ router.post('/vacancy', Controller.create)
 router.put('/vacancy/:id', Controller.update)
 router.delete('/vacancy/:id', Controller.delete)
 
-module.exports = router
+module.exports = router 
