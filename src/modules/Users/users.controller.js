@@ -20,7 +20,7 @@ class UserController {
     async create(req, res, next) {
         try {
             const message = UserTemplate(req.body)
-            // await telegramService.sendMessage({ chatId: process.env.USER_CHAT_ID, message })
+            await telegramService.sendMessage({ chatId: process.env.USER_CHAT_ID, message })
             const User = await Service.create(req.body)
             if (User?.error) throw new ExpressError(User?.message)
             res.status(201).json(User)
